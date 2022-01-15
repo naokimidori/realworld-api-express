@@ -1,13 +1,8 @@
 const express = require('express')
+const tagsController = require('../controller/tag')
 
 const router = express.Router()
 
-router.get('/tags', async (req, res, next) => {
-  try {
-    res.send('get tags')
-  } catch (err) {
-    next(err)
-  }
-})
+router.get('/tags', tagsController.getTags)
 
 module.exports = router
