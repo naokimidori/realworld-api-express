@@ -5,12 +5,15 @@ const { jwtSecret } = require('../config/config.default')
 exports.login = async (req, res, next) => {
   try {
     const user = req.user.toJSON()
-    const token = await jwt.sign({
-      userId: user._id,
-    }, jwtSecret)
+    const token = await jwt.sign(
+      {
+        userId: user._id,
+      },
+      jwtSecret
+    )
 
     Reflect.deleteProperty(user, 'password')
-    
+
     res.status(200).json({
       ...user,
       token,
@@ -36,7 +39,9 @@ exports.register = async (req, res, next) => {
 
 exports.getCurrentUser = async (req, res, next) => {
   try {
-    res.send('getCurrentUser')
+    res.status(200).json({
+      user: req.user,
+    })
   } catch (err) {
     next(err)
   }
