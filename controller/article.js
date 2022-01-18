@@ -2,7 +2,15 @@ const { Article } = require('../model')
 
 exports.getArticles = async (req, res, next) => {
   try {
-    res.send('getArticles')
+    const { limit = 20, offset = 0 } = req.query
+    const articles = await Article.find()
+      .skip(Number.parseInt(offset))
+      .limit(Number.parseInt(limit))
+    const articlesCount = await Article.countDocuments()
+    res.status(200).json({
+      articles,
+      articlesCount,
+    })
   } catch (err) {
     next(err)
   }
@@ -18,7 +26,9 @@ exports.getFeedArticles = async (req, res, next) => {
 
 exports.getArticle = async (req, res, next) => {
   try {
-    const article = await Article.findById(req.params.articleId).populate('author')
+    const article = await Article.findById(req.params.articleId).populate(
+      'author'
+    )
     if (!article) {
       return res.status(404).end()
     }
@@ -35,7 +45,7 @@ exports.createArticle = async (req, res, next) => {
     article.populate('author') // 根据userId填充author内容
     await article.save()
     res.status(201).json({
-      article
+      article,
     })
   } catch (err) {
     next(err)
