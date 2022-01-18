@@ -9,7 +9,7 @@ exports.login = async (req, res, next) => {
       {
         userId: user._id,
       },
-      jwtSecret
+      jwtSecret,
     )
 
     Reflect.deleteProperty(user, 'password')
