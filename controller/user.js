@@ -1,3 +1,5 @@
+const { User } = require('../model')
+
 exports.login = async (req, res, next) => {
   try {
     res.send('login')
@@ -8,7 +10,13 @@ exports.login = async (req, res, next) => {
 
 exports.register = async (req, res, next) => {
   try {
-    res.send('register')
+    let user = new User(req.body.user)
+    await user.save()
+    user = user.toJSON() // mongoose对象转成普通js对象
+    Reflect.deleteProperty(user, 'password')
+    res.status(201).json({
+      user
+    })
   } catch (err) {
     next(err)
   }
