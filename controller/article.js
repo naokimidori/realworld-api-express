@@ -27,6 +27,8 @@ exports.getArticle = async (req, res, next) => {
 exports.createArticle = async (req, res, next) => {
   try {
     const article = new Article(req.body.article)
+    article.author = req.user._id
+    article.populate('author') // 根据userId填充author内容
     await article.save()
     res.status(200).json({
       article
