@@ -44,13 +44,12 @@ exports.login = [
         return Promise.reject('用户不存在')
       }
       // 将user对象挂载到req对象中，后续中间件即可直接使用
-      req._user = user
+      req.user = user
     }),
   ]),
   validate([
     body('user.password').custom(async (password, { req }) => {
-      console.log(req._user);
-      if (md5(password) !== req._user.password) {
+      if (md5(password) !== req.user.password) {
         return Promise.reject('密码错误')
       }
     }),
