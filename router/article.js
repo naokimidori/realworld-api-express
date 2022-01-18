@@ -11,31 +11,46 @@ router.get('/articles', articlesController.getArticles)
 // 获取关注的文章列表
 router.get('/articles/feed', articlesController.getFeedArticles)
 
-// 获取打单个文章详情
-router.get('/articles/:slug', articlesController.getArticle)
+// 获取单个文章详情
+router.get(
+  '/articles/:articleId',
+  articleValidator.getArticle,
+  articlesController.getArticle
+)
 
 // 创建文章
-router.post('/articles', auth, articleValidator.createArticle, articlesController.createArticle)
+router.post(
+  '/articles',
+  auth,
+  articleValidator.createArticle,
+  articlesController.createArticle
+)
 
 // 更新文章
-router.put('/articles/:slug', articlesController.updateArticle)
+router.put('/articles/:articleId', articlesController.updateArticle)
 
 // 删除文章
-router.delete('/articles/:slug', articlesController.deleteArticle)
+router.delete('/articles/:articleId', articlesController.deleteArticle)
 
 // 创建文章评论
-router.post('/articles/:slug/comments', articlesController.createComment)
+router.post('/articles/:articleId/comments', articlesController.createComment)
 
 // 获取文章评论
-router.get('/articles/:slug/comments', articlesController.getComments)
+router.get('/articles/:articleId/comments', articlesController.getComments)
 
 // 删除评论
-router.delete('/articles/:slug/comments/:id', articlesController.deleteComment)
+router.delete(
+  '/articles/:articleId/comments/:id',
+  articlesController.deleteComment
+)
 
 // 喜欢文章
-router.post('/articles/:slug/favorite', articlesController.favoriteArticle)
+router.post('/articles/:articleId/favorite', articlesController.favoriteArticle)
 
 // 取消喜欢文章
-router.delete('/articles/:slug/favorite', articlesController.unfavoriteArticle)
+router.delete(
+  '/articles/:articleId/favorite',
+  articlesController.unfavoriteArticle
+)
 
 module.exports = router
