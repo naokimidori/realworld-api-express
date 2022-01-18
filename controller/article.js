@@ -1,3 +1,5 @@
+const { Article } = require('../model')
+
 exports.getArticles = async (req, res, next) => {
   try {
     res.send('getArticles')
@@ -24,7 +26,11 @@ exports.getArticle = async (req, res, next) => {
 
 exports.createArticle = async (req, res, next) => {
   try {
-    res.send('createArticle')
+    const article = new Article(req.body.article)
+    await article.save()
+    res.status(200).json({
+      article
+    })
   } catch (err) {
     next(err)
   }
