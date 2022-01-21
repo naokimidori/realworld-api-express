@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 // 连接mongodb
-mongoose.connect('mongodb://localhost:27017/realworld')
+mongoose.connect('mongodb://192.168.1.12:27017/realworld')
 
 const db = mongoose.connection
 
