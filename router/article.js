@@ -27,8 +27,13 @@ router.post(
 )
 
 // 更新文章
-router.put('/articles/:articleId', articlesController.updateArticle)
-
+router.put(
+  '/articles/:articleId',
+  auth,
+  articleValidator.updateArticle,
+  articlesController.updateArticle
+)
+ 
 // 删除文章
 router.delete('/articles/:articleId', articlesController.deleteArticle)
 
