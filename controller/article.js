@@ -1,12 +1,19 @@
-const { Article } = require('../model')
+const { Article, User } = require('../model')
 
 exports.getArticles = async (req, res, next) => {
   try {
-    const { limit = 20, offset = 0, tag = '' } = req.query
+    const { limit = 20, offset = 0, tag, author } = req.query
     const filter = {}
+
     if (tag) {
       filter.tagList = tag
     }
+
+    if (author) {
+      const user = await User.findOne({ username: author })
+      filter.author = user ? user._id : null
+    }
+
     const articles = await Article.find(filter)
       .skip(Number.parseInt(offset))
       .limit(Number.parseInt(limit))
