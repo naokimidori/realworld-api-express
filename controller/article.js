@@ -2,8 +2,12 @@ const { Article } = require('../model')
 
 exports.getArticles = async (req, res, next) => {
   try {
-    const { limit = 20, offset = 0 } = req.query
-    const articles = await Article.find()
+    const { limit = 20, offset = 0, tag = '' } = req.query
+    const filter = {}
+    if (tag) {
+      filter.tagList = tag
+    }
+    const articles = await Article.find(filter)
       .skip(Number.parseInt(offset))
       .limit(Number.parseInt(limit))
     const articlesCount = await Article.countDocuments()
