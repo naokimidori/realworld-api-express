@@ -17,6 +17,10 @@ exports.getArticles = async (req, res, next) => {
     const articles = await Article.find(filter)
       .skip(Number.parseInt(offset))
       .limit(Number.parseInt(limit))
+      .sort({
+        // -1 倒序 1正序
+        createdAt: -1
+      })
     const articlesCount = await Article.countDocuments()
     res.status(200).json({
       articles,
