@@ -86,7 +86,9 @@ exports.updateArticle = async (req, res, next) => {
 
 exports.deleteArticle = async (req, res, next) => {
   try {
-    res.send('deleteArticle')
+    const article = req.article
+    await article.remove()
+    res.status(204).end()
   } catch (err) {
     next(err)
   }

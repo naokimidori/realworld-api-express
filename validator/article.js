@@ -41,3 +41,5 @@ exports.updateArticle = [
     next()
   }
 ]
+
+exports.deleteArticle = exports.updateArticle

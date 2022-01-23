@@ -33,9 +33,14 @@ router.put(
   articleValidator.updateArticle,
   articlesController.updateArticle
 )
- 
+
 // 删除文章
-router.delete('/articles/:articleId', articlesController.deleteArticle)
+router.delete(
+  '/articles/:articleId',
+  auth,
+  articleValidator.deleteArticle,
+  articlesController.deleteArticle
+)
 
 // 创建文章评论
 router.post('/articles/:articleId/comments', articlesController.createComment)
